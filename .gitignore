@@ -37,3 +37,10 @@ public/styles/style-web.css
 public/styles/style-main.css
 coverage/*
 .idea/
+.settings/org.eclipse.wst.jsdt.ui.superType.container
+.project
+.settings/.jsdtscope
+.settings/org.eclipse.wst.validation.prefs
+.settings/org.eclipse.wst.jsdt.ui.superType.name
+.settings/org.eclipse.wst.jsdt.ui.prefs
+.tern-project
