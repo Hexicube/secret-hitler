@@ -237,6 +237,7 @@ export class App extends React.Component {
 				excludedPlayerCount: [6],
 				private: false,
 				rainbowgame: false,
+				emailverifiedgame: false,
 				experiencedMode: true,
 				disableChat: false,
 				disableGamechat: false,

@@ -204,7 +204,8 @@ module.exports.sendGameList = socket => {
 		privateOnly: game.general.privateOnly,
 		private: game.general.private,
 		uid: game.general.uid,
-		rainbowgame: game.general.rainbowgame
+		rainbowgame: game.general.rainbowgame,
+		emailverifiedgame: game.general.emailverifiedgame
 	}));
 
 	if (socket) {

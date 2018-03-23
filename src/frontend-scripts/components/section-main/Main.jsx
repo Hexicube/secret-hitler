@@ -23,6 +23,7 @@ export class Main extends React.Component {
 				inprogress: true,
 				completed: true,
 				rainbow: true,
+				emailverified: true,
 				standard: true
 			}
 		};

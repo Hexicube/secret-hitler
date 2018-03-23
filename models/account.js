@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 const { Schema } = mongoose;
-Account = new Schema({
+const Account = new Schema({
 	username: {
 		type: String,
 		required: true,
@@ -10,6 +10,7 @@ Account = new Schema({
 	password: String,
 	gameSettings: {
 		isRainbow: Boolean,
+		isEmailVerified: Boolean,
 		newReport: Boolean,
 		customCardback: String,
 		customCardbackSaveTime: String,

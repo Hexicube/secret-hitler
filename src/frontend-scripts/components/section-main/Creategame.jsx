@@ -25,6 +25,7 @@ export default class Creategame extends React.Component {
 			privateShowing: false,
 			containsBadWord: false,
 			rainbowgame: false,
+			emailverifiedgame: false,
 			checkedSliderValues: new Array(6).fill(true),
 			checkedRebalanceValues: new Array(3).fill(true),
 			privateonlygame: false,
@@ -83,6 +84,15 @@ export default class Creategame extends React.Component {
 			},
 			onUnchecked() {
 				self.setState({ rainbowgame: false });
+			}
+		});
+
+		$(this.emailverifiedgame).checkbox({
+			onChecked() {
+				self.setState({ emailverifiedgame: true });
+			},
+			onUnchecked() {
+				self.setState({ emailverifiedgame: false });
 			}
 		});
 
@@ -224,6 +234,7 @@ export default class Creategame extends React.Component {
 					isTourny: this.state.isTourny,
 					disableGamechat: this.state.disablegamechat,
 					rainbowgame: this.state.rainbowgame,
+					emailverifiedgame: this.state.emailverifiedgame,
 					blindMode: this.state.blindMode,
 					timedMode: this.state.timedMode ? this.state.timedSliderValue[0] : undefined,
 					casualGame: this.state.casualgame,
@@ -1265,6 +1276,32 @@ export default class Creategame extends React.Component {
 											}}
 										>
 											<input type="checkbox" name="rainbowgame" defaultChecked={false} />
+										</div>
+									</div>
+								);
+							}
+						})()}
+						{(() => {
+							let user, isEmailVerified;
+
+							if (this.props.userList.list) {
+								user = this.props.userList.list.find(user => user.userName === this.props.userInfo.userName);
+							}
+							if (user) {
+								isEmailVerified = user.verified;
+							}
+							if (isEmailVerified) {
+								return (
+									<div className="four wide column experiencedmode">
+										<img src="../images/email.png" />
+										<h4 className="ui header">Email verified game - only fellow email-verified players can be seated in this game</h4>
+										<div
+											className="ui fitted toggle checkbox"
+											ref={c => {
+												this.emailverifiedgame = c;
+											}}
+										>
+											<input type="checkbox" name="emailverifiedgame" defaultChecked={false} />
 										</div>
 									</div>
 								);

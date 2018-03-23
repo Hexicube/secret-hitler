@@ -94,6 +94,16 @@ export class GamesList extends React.Component {
 						}}
 					/>
 				</div>
+				<div className="three wide column iconcolumn">
+					<i title="Filter by email-verified-only games" className="email-icon" />
+					<Checkbox
+						toggle
+						checked={this.props.gameFilter.emailverified}
+						onChange={() => {
+							this.toggleFilter('emailverified');
+						}}
+					/>
+				</div>
 			</div>
 		);
 	}
@@ -104,13 +114,14 @@ export class GamesList extends React.Component {
 		if (gameList.length) {
 			return gameList
 				.filter(game => {
-					const { pub, priv, unstarted, inprogress, completed, rainbow, standard } = this.props.gameFilter;
+					const { pub, priv, unstarted, inprogress, completed, rainbow, emailverified, standard } = this.props.gameFilter;
 
 					return !(
 						(game.private && !priv) ||
 						(!game.private && !pub) ||
 						(game.rainbowgame && !rainbow) ||
 						(!game.rainbowgame && !standard) ||
+						(game.emailverifiedgame && !email) ||
 						(game.gameStatus === 'notStarted' && !unstarted) ||
 						(game.gameStatus === 'isStarted' && !inprogress) ||
 						((game.gameStatus === 'fascist' || game.gameStatus === 'liberal') && !completed)

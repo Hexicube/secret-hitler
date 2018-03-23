@@ -2,9 +2,9 @@ const passport = require('passport');
 const Account = require('../models/account');
 const Profile = require('../models/profile/index');
 const BannedIP = require('../models/bannedIP');
-const { ipbansNotEnforced, accountCreationDisabled } = require('./socket/models');
-// verifyAccount = require('./verify-account'),
-// resetPassword = require('./reset-password'),
+const { ipbansNotEnforced, accountCreationDisabled } = require('./socket/models'),
+verifyAccount = require('./verify-account'),
+resetPassword = require('./reset-password');
 const blacklistedWords = require('../iso/blacklistwords');
 /**
  * @param {object} req - express request object.
@@ -20,8 +20,8 @@ const ensureAuthenticated = (req, res, next) => {
 };
 
 module.exports = () => {
-	// verifyAccount.setRoutes();
-	// resetPassword.setRoutes();
+	verifyAccount.setRoutes();
+	resetPassword.setRoutes();
 
 	app.get('/account', ensureAuthenticated, (req, res) => {
 		res.render('page-account', {
@@ -48,35 +48,33 @@ module.exports = () => {
 		});
 	});
 
-	// app.post('/account/change-email', ensureAuthenticated, (req, res) => {
-	// 	const { newEmail, newEmailConfirm } = req.body,
-	// 		{ user } = req;
+	app.post('/account/change-email', ensureAuthenticated, (req, res) => {
+	 	const { newEmail, newEmailConfirm } = req.body,
+	 		{ user } = req;
 
-	// 	if (newEmail !== newEmailConfirm) {
-	// 		res.status(401).json({ message: 'not equal' });
-	// 		return;
-	// 	}
+	 	if (newEmail !== newEmailConfirm) {
+	 		res.status(401).json({ message: 'not equal' });
+	 		return;
+	 	}
+	 	Account.findOne({ username: user.username }, (err, account) => {
+	 		if (err) {
+	 			console.log(err);
+	 		}
 
-	// 	Account.findOne({ username: user.username }, (err, account) => {
-	// 		if (err) {
-	// 			console.log(err);
-	// 		}
+			account.verification.email = newEmail;
+			account.save(() => {
+				res.send();
+			});
+		});
+	});
 
-	// 		account.verification.email = newEmail;
-	// 		account.save(() => {
-	// 			res.send();
-	// 		});
-	// 	});
-	// });
-
-	// app.post('/account/request-verification', ensureAuthenticated, (req, res) => {
-	// 	verifyAccount.sendToken(req.user.username, req.user.verification.email);
-	// 	res.send();
-	// });
-
-	// app.post('/account/reset-password', (req, res) => {
-	// 	resetPassword.sendToken(req.body.email, res);
-	// });
+	app.post('/account/request-verification', ensureAuthenticated, (req, res) => {
+		verifyAccount.sendToken(req.user.username, req.user.verification.email);
+		res.send();
+	});
+	app.post('/account/reset-password', (req, res) => {
+		resetPassword.sendToken(req.body.email, res);
+	});
 
 	app.post('/account/signup', (req, res, next) => {
 		const { username, password, password2, email, isPrivate } = req.body;

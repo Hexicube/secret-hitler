@@ -9,6 +9,7 @@ const Game = new Schema({
 	winningTeam: String,
 	season: Number,
 	isRainbow: Boolean,
+	isEmailVerified: Boolean,
 	rebalance6p: Boolean,
 	rebalance7p: Boolean,
 	rebalance9p: Boolean,
